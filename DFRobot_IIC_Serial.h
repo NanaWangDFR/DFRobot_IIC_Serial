@@ -406,16 +406,6 @@ protected:
   uint8_t subSerialChnnlSwitch(uint8_t subUartChannel);
 
   /**
-   * @brief 子串口进入休眠状态
-   */
-  void sleep();
-
-  /**
-   * @brief 子串口从休眠状态唤醒
-   */
-  void wakeup();
-
-  /**
    * @brief 写寄存器函数
    * @param reg  寄存器地址 8bits
    * @param pBuf 要写入数据的存放缓存

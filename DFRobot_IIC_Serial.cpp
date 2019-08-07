@@ -333,13 +333,7 @@ uint8_t DFRobot_IIC_Serial::subSerialChnnlSwitch(uint8_t subUartChannel){
   _subSerialChannel = subUartChannel;
   return channel;
 }
-void DFRobot_IIC_Serial::sleep(){
-  
-}
 
-void DFRobot_IIC_Serial::wakeup(){
-
-}
 void DFRobot_IIC_Serial::writeReg(uint8_t reg, const void* pBuf, size_t size){
   if(pBuf == NULL){
       DBG("pBuf ERROR!! : null pointer");

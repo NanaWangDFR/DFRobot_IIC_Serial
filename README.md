@@ -21,9 +21,11 @@
 * [Credits](#credits)
 
 ## Summary
-1. 波特率设置；<br>
-2. 串口数据读；<br>
-3. 串口数据写；<br>
+1. 设置串口波特率和数据格式；<br>
+2. 串口读取一个字节数据；<br>
+3. 串口写入一个字节数据；<br>
+4. 串口读取多个个字节数据；<br>
+5. 串口写入多个字节数据；<br>
 
 ## Installation
 
@@ -112,7 +114,7 @@ void flush(void);
  * @brief 向发送FIFO缓存中写入一个字节,以下为不同数据类型字节的重载函数
  * @return 成功返回0，否者返回-1
  */
-virtual size_t write(uint8_t);
+size_t write(uint8_t);
 inline size_t write(unsigned long n);
 inline size_t write(long n);
 inline size_t write(unsigned int n);
