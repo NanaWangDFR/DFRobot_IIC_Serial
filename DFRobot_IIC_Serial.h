@@ -319,8 +319,6 @@ public:
   size_t write(void *pBuf, size_t size);
   using Print::write; // pull in write(str) and write(buf, size) from Print
   operator bool() { return true; }
-  /*测试用的，测试完了会删掉*/
-  void test();
 
 protected:
   /**

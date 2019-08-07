@@ -161,7 +161,6 @@ void DFRobot_IIC_Serial::flush(void){
   while(fsr.tDat == 1);
 }
 
-
 void DFRobot_IIC_Serial::subSerialConfig(uint8_t subUartChannel){
   DBG("子串口时钟使能");
   subSerialGlobalRegEnable(subUartChannel, clock);
@@ -391,6 +390,7 @@ uint8_t DFRobot_IIC_Serial::readFIFO(void* pBuf, size_t size){
   }
   return (uint8_t)size;
 }
+
 void DFRobot_IIC_Serial::writeFIFO(void *pBuf, size_t size){
   if(pBuf == NULL){
       DBG("pBuf ERROR!! : null pointer");
@@ -408,35 +408,4 @@ void DFRobot_IIC_Serial::writeFIFO(void *pBuf, size_t size){
       }
       left -= size;
   }
-}
-void DFRobot_IIC_Serial::test(){
-  uint8_t val = 0;
-  for(uint8_t addr = 0x04;addr < 0x0E; addr ++){
-      Serial.print(addr);
-      Serial.print(": ");
-      readReg(addr, &val, 1);
-      Serial.println(val, BIN);
-  }
-  subSerialPageSwitch(page1);
-  for(uint8_t addr = 0x04; addr < 0x09; addr ++){
-      Serial.print(addr);
-      Serial.print(": ");
-      readReg(addr, &val, 1);
-      Serial.println(val, BIN);
-  }
-  subSerialPageSwitch(page0);
-  uint8_t channl = subSerialChnnlSwitch(SUBUART_CHANNEL_1);
-  readReg(REG_WK2132_GIER, &val, 1);
-  Serial.print("REG_WK2132_GIER: ");
-  Serial.println(val, HEX);
-  readReg(REG_WK2132_GENA, &val, 1);
-  Serial.print("REG_WK2132_GENA: ");
-  Serial.println(val, HEX);
-  readReg(REG_WK2132_GIFR, &val, 1);
-  Serial.print("REG_WK2132_GIFR: ");
-  Serial.println(val, HEX);
-  readReg(REG_WK2132_GRST, &val, 1);
-  Serial.print("REG_WK2132_GRST: ");
-  Serial.println(val, HEX);
-  subSerialChnnlSwitch(channl);
 }
