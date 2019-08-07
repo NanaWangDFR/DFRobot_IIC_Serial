@@ -93,7 +93,7 @@ class DFRobot_IIC_Serial : public _Stream{
 class DFRobot_IIC_Serial : public Stream{
 #endif
 public:
-  #define FOSC                11059851L //外部晶振频率11.059851MHz
+  #define FOSC                14745600L//外部晶振频率14.7456MHz
   #define OBJECT_REGISTER      0x00     //寄存器对象
   #define OBJECT_FIFO          0x01     //FIFO缓存对象
   #define IIC_BUFFER_SIZE      32       //IIC一次传输的最大字节数
