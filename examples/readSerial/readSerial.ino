@@ -1,6 +1,6 @@
 /*!
  * @file readSerial.ino
- * @brief 从子串口读取数据(以子串口2为例)
+ * @brief 从子串口读取数据(以子串口1为例)
  * @n 检测子串口1中是否有数据被接收，若有数据则读并打印
  *
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
