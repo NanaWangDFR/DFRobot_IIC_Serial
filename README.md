@@ -21,11 +21,9 @@
 * [Credits](#credits)
 
 ## Summary
-1. 设置串口波特率和数据格式；<br>
-2. 串口读取一个字节数据；<br>
-3. 串口写入一个字节数据；<br>
-4. 串口读取多个个字节数据；<br>
-5. 串口写入多个字节数据；<br>
+1. 波特率设置；<br>
+2. 串口数据读；<br>
+3. 串口数据写；<br>
 
 ## Installation
 
@@ -38,25 +36,19 @@ To use this library, first download the library file, paste it into the \Arduino
  * @brief 构造函数
  * @param pWire I2C总线指针对象，构造设备，可传参数也可不传参数，默认Wire
  * @param subUartChannel 子串口通道号，WK2132有2个子串口，可填SUBUART_CHANNEL_1或SUBUART_CHANNEL_2
- * @param addr 8位I2C地址的前5位右移3位，取值(0x02/0x06/0x0A/0x0E)默认0x27
- * @n IIC地址由构成如下图所示
- * 7  6  5  4  3  2  1   0
- * 0  A1 A0 1  0  C1 C0 0/1
- * @n 第7/4/3位为固定值，分别为0/1/0
- * @n 第6/5位的值由拨码开关来确定，范围为（00~11），默认为11
+ * @param IA1 对应模块上的拨码开关IA1的电平（0或1），用于配置IIC地址第6位的值，默认为1
+ * @param IA0 对应模块上的拨码开关IA0的电平（0或1），用于配置IIC地址第5位的值，默认为1
+ * @n 模块IIC地址由构成如下图所示
+ * 7   6   5   4   3   2   1   0
+ * 0  IA1 IA0  1   0  C1  C0  0/1
+ * @n IIC地址是7位地址，而一个字节有8位，多出的一位一般用0处理
+ * @n 第6位值对应拨码开关的IA1，可手动配置
+ * @n 第5位值对应拨码开关的IA0，可手动配置
+ * @n 第4/3位为固定值，分别为1/0
  * @n 第2/1位的值为子串口通道，00表示子串口1，01表示子串口2
- * @n 第0位表示是读写寄存器还是读写FIFO缓存，0表示读寄存器，1表示读FIFO缓存
- * @n 综上所述，此串口扩展模块的IIC地址构成为0 A1 A0 1 0 C1 C0 0/1
- * @n 构造函数中的addr指的是第7~3位右移3位，如下表所示：默认为0x0E
-    0  0  0  0  | A1 A0 1  0
-    0  0  0  0  | 1  1  1  0    0x0E
-    0  0  0  0  | 1  0  1  0    0x0A
-    0  0  0  0  | 0  1  1  0    0x06
-    0  0  0  0  | 0  0  1  0    0x02
- * @n 模块实际IIC地址与子串口通道编号和是操作寄存器还是FIFO有关
- * @n IIC实际地址:_addr = (addr << 3) | SUBUART_CHANNEL_N | OBJECT_REGISTER/OBJECT_FIFO
+ * @n 第0位表示操作对象是寄存器还是FIFO缓存，0表示寄存器，1表示FIFO缓存
  */
-DFRobot_IIC_Serial(TwoWire &wire = Wire, uint8_t subUartChannel = SUBUART_CHANNEL_1, uint8_t addr = 0x0E);
+DFRobot_IIC_Serial(TwoWire &wire = Wire, uint8_t subUartChannel = SUBUART_CHANNEL_1, uint8_t IA1 = 1, uint8_t IA0 = 1);
 ~DFRobot_IIC_Serial();
 
 /**
@@ -114,7 +106,7 @@ void flush(void);
  * @brief 向发送FIFO缓存中写入一个字节,以下为不同数据类型字节的重载函数
  * @return 成功返回0，否者返回-1
  */
-size_t write(uint8_t);
+virtual size_t write(uint8_t);
 inline size_t write(unsigned long n);
 inline size_t write(long n);
 inline size_t write(unsigned int n);
@@ -126,7 +118,7 @@ inline size_t write(int n);
  * @param size 要读取数据的长度
  * @return 输出的字节数
  */
-size_t write(void *pBuf, size_t size);
+size_t write(const uint8_t *pBuf, size_t size);
 ```
 
 ## Compatibility
